@@ -22,10 +22,12 @@ import {
 import type { AuthInfo, DerivAccount, AuthState, AuthConfig } from '@deriv/core';
 
 function getAuthConfig(): AuthConfig {
+  const configuredRedirectUri = process.env.NEXT_PUBLIC_DERIV_REDIRECT_URI?.trim();
+
   const config: AuthConfig = {
     clientId: process.env.NEXT_PUBLIC_DERIV_APP_ID ?? '',
     redirectUri:
-      process.env.NEXT_PUBLIC_DERIV_REDIRECT_URI ??
+      configuredRedirectUri ||
       (typeof window !== 'undefined' ? window.location.origin : ''),
   };
 
