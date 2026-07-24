@@ -13,6 +13,7 @@ import { useIsMobile } from '@/hooks/use-is-mobile';
 import { useContractMarkers } from '@/hooks/use-contract-markers';
 import { TradeControls } from './trade-controls';
 import { ConfigurableAccumulatorControls } from './configurable-accumulator-controls';
+import { BankClerkView } from './bankclerk/bank-clerk-view';
 import type { ChartBarrier } from '@/components/custom/smart-chart';
 import type {
   AuthState,
@@ -354,6 +355,45 @@ export function AccumulatorView({
           </CardContent>
         </Card>
       </main>
+    );
+  }
+
+  // Deployed / live app: render the new Bank Clerk layout. The editor keeps the
+  // original two-column / no-code rendering below so its tooling still works.
+  if (!editMode) {
+    return (
+      <BankClerkView
+        authState={authState}
+        accounts={accounts}
+        activeAccount={activeAccount}
+        onLogin={onLogin}
+        onSignUp={onSignUp}
+        onLogout={onLogout}
+        onSwitchAccount={onSwitchAccount}
+        logoSrc={logoSrc}
+        appName={appName}
+        isConnected={isConnected}
+        isLoading={isLoading}
+        symbols={symbols}
+        activeSymbol={activeSymbol}
+        selectSymbol={selectSymbol}
+        prices={prices ?? []}
+        pipSize={pipSize ?? 2}
+        growthRate={growthRate}
+        setGrowthRate={setGrowthRate}
+        growthRateOptions={growthRateOptions}
+        stake={stake}
+        setStake={setStake}
+        proposal={proposal}
+        buyContract={buyContract}
+        isBuying={isBuying}
+        buyResult={buyResult}
+        buyError={buyError}
+        clearBuyResult={clearBuyResult}
+        activePosition={activeAccuPosition}
+        sellContract={sellContract}
+        isClosing={sellingId === activeAccuPosition?.contract_id}
+      />
     );
   }
 
